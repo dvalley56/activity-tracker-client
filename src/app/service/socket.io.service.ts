@@ -13,7 +13,7 @@ export class SocketIOService {
 
   constructor() {
     this.socket = io(this.url, { 
-      query: {
+      extraHeaders: {
         'x-device-type': 'Angular' // Set the device type to Angular
       }
     });
