@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 // @ts-ignore
 import * as io from 'socket.io-client';
@@ -11,7 +12,7 @@ export class SocketIOService {
   private url = `${environment.socketUrl}`; // Update with your server URL
   private socket;
 
-  constructor() {
+  constructor(private _snackBar: MatSnackBar) {
     this.socket = io(this.url, { 
       extraHeaders: {
         'x-device-type': 'Angular' // Set the device type to Angular
@@ -20,6 +21,19 @@ export class SocketIOService {
 
     this.socket.on('connect', () => {
         console.warn('Connected to server');
+
+        // listen to event tempOutOfRange, humidityOutOfRange, fall
+        this.socket.on('tempOutOfRange', (data: string) => {
+          this._snackBar.open(data);
+        });
+
+        this.socket.on('humidityOutOfRange', (data: string) => {
+          this._snackBar.open(data);
+        });
+
+        this.socket.on('fall', (data: string) => {
+          this._snackBar.open(data);
+        });
     });
   }
 

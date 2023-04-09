@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccelerationChartComponent } from './components/acceleration/acceleration.component';
 import { TemperatureChartComponent } from './components/temprature/temprature.component';
 import { HumidityChartComponent } from './components/humidity/humidity.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HumidityChartComponent } from './components/humidity/humidity.component
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    NgChartsModule
+    NgChartsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
