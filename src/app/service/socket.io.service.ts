@@ -24,15 +24,21 @@ export class SocketIOService {
 
         // listen to event tempOutOfRange, humidityOutOfRange, fall
         this.socket.on('tempOutOfRange', (data: string) => {
-          this._snackBar.open(data);
+          this._snackBar.open(data, 'Okay', {
+            duration: 10000,
+          });
         });
 
         this.socket.on('humidityOutOfRange', (data: string) => {
-          this._snackBar.open(data);
+          this._snackBar.open(data, 'Okay', {
+            duration: 10000,
+            });
         });
 
         this.socket.on('fall', (data: string) => {
-          this._snackBar.open(data);
+          this._snackBar.open(data, 'Okay', {
+            duration: 10000,
+            });
         });
     });
   }
