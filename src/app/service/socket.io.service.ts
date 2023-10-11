@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SocketIOService {
-  private url = `${environment.socketUrl}`; // Update with your server URL
+  private url = `${environment.apiUrl}`; // Update with your server URL
   private socket;
 
   constructor(private _snackBar: MatSnackBar) {

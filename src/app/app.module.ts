@@ -8,19 +8,27 @@ import { AccelerationChartComponent } from './components/acceleration/accelerati
 import { TemperatureChartComponent } from './components/temprature/temprature.component';
 import { HumidityChartComponent } from './components/humidity/humidity.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { AppRoutingModule } from './app.router-module';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { LiveFeedComponent } from './live-feed/live-feed.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccelerationChartComponent,
     TemperatureChartComponent,
-    HumidityChartComponent
+    HumidityChartComponent,
+    DashboardComponent,
+    LiveFeedComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     NgChartsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

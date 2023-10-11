@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    socketUrl: 'https://nodemcu-server.azurewebsites.net',
+    apiUrl: 'https://nodemcu-server.azurewebsites.net',
 };

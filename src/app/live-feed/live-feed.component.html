@@ -1,0 +1,8 @@
+<div class="container">
+    <p class="mat-headline-5">
+        Activity Status : {{data.at(-1)?.activity_status}}
+    </p>
+    <app-acceleration-chart [accelerationData]="data"></app-acceleration-chart>
+    <app-temperature-chart [temperatureData]="data"></app-temperature-chart>
+    <app-humidity-chart [humidityData]="data"></app-humidity-chart>
+</div>
