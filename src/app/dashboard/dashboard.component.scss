@@ -1,0 +1,11 @@
+.cont {
+    padding : 20px;
+    margin : 20px;
+
+    .toolbar {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 30px;
+        align-items: center;
+    }
+}

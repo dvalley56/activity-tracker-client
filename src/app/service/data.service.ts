@@ -8,17 +8,17 @@ import { Observable } from 'rxjs';
 export class DataService {
     constructor(private httpClient: HttpClient) { }
     
-    getData(dataRange: string | null, activity_status: string | null): Observable<Array<IDataModel>> {
+    getData(activity_status: string | null, startDate: string | null, endDate: string | null): Observable<Array<IDataModel>> {
         let url = `${environment.apiUrl}/data`;
 
-        if (dataRange && activity_status)
-            url += `?dataRange=${dataRange}&activity_status=${activity_status}`
-
-        if(dataRange)
-            url += `?dataRange=${dataRange}`;
-        
-        if(activity_status)
-            url += `?activity_status=${activity_status}`;
+        if(activity_status && startDate && endDate) {
+            url += `?activity_status=${activity_status}&startDate=${startDate}&endDate=${endDate}`;
+        } else {
+            if(startDate && endDate)
+                url += `?startDate=${startDate}&endDate=${endDate}`;
+            if (activity_status)
+                url += `?activity_status=${activity_status}`;
+        }
         
         return this.httpClient.get<Array<IDataModel>>(url);
     }

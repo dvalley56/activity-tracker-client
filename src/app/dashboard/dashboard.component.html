@@ -1,6 +1,70 @@
-dashboard works!
-<p>
-    {{
-        data | json
-    }}
-</p>
+<div class="cont">
+    <!-- Make a date range  -->
+    <div>
+        <form class="toolbar" [formGroup]="myForm">
+
+            <mat-form-field appearance="outline">
+                <mat-label>Choose an activy status</mat-label>
+                <mat-select formControlName="activityStatus">
+                    <mat-option>---</mat-option>
+                    <mat-option value="idle">Idle</mat-option>
+                    <mat-option value="walking">Walking</mat-option>
+                    <mat-option value="running">Running</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <input matInput [ngxMatDatetimePicker]="startDate" formControlName="startDate" placeholder="Choose a start time">
+                <ngx-mat-datepicker-toggle matSuffix [for]="startDate"></ngx-mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #startDate [enableMeridian]="true">
+                </ngx-mat-datetime-picker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <input matInput [ngxMatDatetimePicker]="endDate" formControlName="endDate" placeholder="Choose a end time">
+                <ngx-mat-datepicker-toggle matSuffix [for]="endDate"></ngx-mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #endDate [enableMeridian]="true">
+                </ngx-mat-datetime-picker>
+            </mat-form-field>
+            <!-- <mat-form-field>
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
+                    <input matEndDate [(ngModel)]="endDate" placeholder="End date">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field> -->
+
+            <button type="button" (click)="getData()" mat-flat-button color="primary">
+                <mat-icon>search</mat-icon>
+                Search
+            </button>
+            <button type="button" routerLink="/live-feed" mat-flat-button color="primary">
+                <mat-icon>play_arrow</mat-icon>
+                Go Live
+            </button>
+        </form>
+    </div>
+    <div style="height: 600px;">
+        <p class="mat-headline-3" align="center">
+            Acceleration Chart
+        </p>
+        <canvas id="accelerationChart" height="300"></canvas>
+    </div>
+
+    <div style="height: 600px;">
+        <p class="mat-headline-3" align="center" style="margin-top: 128px;">
+            Temperature Chart
+        </p>
+        <canvas id="temperatureChart" height="300"></canvas>
+    </div>
+
+    <div style="height: 600px;">
+        <p class="mat-headline-3" align="center" style="margin-top: 128px;">
+            Humidity Chart
+        </p>
+        <canvas id="humidityChart" height="300"></canvas>
+    </div>
+
+</div>
