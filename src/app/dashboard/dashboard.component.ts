@@ -50,21 +50,21 @@ export class DashboardComponent {
         datasets: [
           {
             data: this.data.map((data) => ({
-              x: new Date(data.timestamp),
+              x: data.timestamp,
               y: data.acceleration_x,
             })),
             label: 'X Axis',
           },
           {
             data: this.data.map((data) => ({
-              x: new Date(data.timestamp),
+              x: data.timestamp,
               y: data.acceleration_y,
             })),
             label: 'Y Axis',
           },
           {
             data: this.data.map((data) => ({
-              x: new Date(data.timestamp),
+              x: data.timestamp,
               y: data.acceleration_z,
             })),
             label: 'Z Axis',
@@ -100,7 +100,7 @@ export class DashboardComponent {
         datasets: [
           {
             data: this.data.map((data) => ({
-              x: new Date(data.timestamp),
+              x: data.timestamp,
               y: data.temperature,
             })),
             label: 'Temperature',
@@ -136,7 +136,7 @@ export class DashboardComponent {
         datasets: [
           {
             data: this.data.map((data) => ({
-              x: new Date(data.timestamp),
+              x: data.timestamp,
               y: data.humidity,
             })),
             label: 'Humidity',
@@ -176,31 +176,31 @@ export class DashboardComponent {
 
         // update data in the charts
         this.accelerationChart.data.datasets[0].data = this.data.map((data) => ({
-          x: new Date(data.timestamp),
+          x: data.timestamp,
           y: data.acceleration_x,
         }));
 
         this.accelerationChart.data.datasets[1].data = this.data.map((data) => ({
-          x: new Date(data.timestamp),
+          x: data.timestamp,
           y: data.acceleration_y,
         }));
 
         this.accelerationChart.data.datasets[2].data = this.data.map((data) => ({
-          x: new Date(data.timestamp),
+          x: data.timestamp,
           y: data.acceleration_z,
         }));
 
         this.accelerationChart.update();
 
         this.tempratureChart.data.datasets[0].data = this.data.map((data) => ({
-          x: new Date(data.timestamp),
+          x: data.timestamp,
           y: data.temperature,
         }));
 
         this.tempratureChart.update();
 
         this.humidityChart.data.datasets[0].data = this.data.map((data) => ({
-          x: new Date(data.timestamp),
+          x: data.timestamp,
           y: data.humidity,
         }));
 
