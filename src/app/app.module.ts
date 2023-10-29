@@ -26,6 +26,7 @@ import {
   NgxMatTimepickerModule 
 } from '@angular-material-components/datetime-picker';
 import { MatInputModule } from '@angular/material/input';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 
@@ -57,7 +58,8 @@ import { MatInputModule } from '@angular/material/input';
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
-    MatInputModule
+    MatInputModule,
+    MatDividerModule
 
   ],
   providers: [],

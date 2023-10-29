@@ -12,12 +12,23 @@ export class LiveFeedComponent {
   humidityOutOfRange: any;
   fall: boolean = false;
   data: IDataModel[] = [];
+  private resetTimer: any;
+
+  isOnline = false;
 
   constructor(private socketService: SocketIOService) {
     // Listen for temperatureOutOfRange event
     this.socketService.listen('data')
     .subscribe((data: IDataModel) => {
+      this.socketService.isOnline.next(true);
       this.data.push(data);
+
+      if(this.resetTimer) clearInterval(this.resetTimer);
+
+      this.resetTimer = setInterval(() => {
+        this.socketService.isOnline.next(false);
+      }, 3000);
+
     });
 
     // Listen for temperatureOutOfRange event
@@ -33,6 +44,11 @@ export class LiveFeedComponent {
     // Listen for fall event
     this.socketService.listen('fall').subscribe(() => {
       this.fall = true;
+    });
+
+    this.socketService.isOnline
+    .subscribe((isOnline) => {
+      this.isOnline = isOnline;
     });
   }
 }

@@ -1,34 +1,40 @@
 import {
   Component,
   Input,
-  OnChanges,
+  OnDestroy,
   OnInit,
-  SimpleChange,
-  SimpleChanges,
 } from '@angular/core';
-import { Chart, ChartDataset } from 'chart.js';
+import { Chart } from 'chart.js';
 import { IDataModel } from 'src/app/models';
 import 'chartjs-adapter-date-fns';
 
 @Component({
   selector: 'app-acceleration-chart',
   template: `
-    <p class="mat-headline-3" align="center">
+     <div class="my-8">
+    <h1 class="!mb-2">
       Acceleration Chart
+    </h1>
+    <p class="mat-body">
+      Acceleration in X, Y and Z axis
     </p>
-    <canvas id="accelerationChart" height="300"></canvas> 
+    <div class="rounded-lg shadow-md p-4 h-96 bg-slate-50">
+      <canvas id="accelerationChartLive" height="300"></canvas>
+    </div>
+  </div>
   `,
 })
-export class AccelerationChartComponent implements OnInit {
+export class AccelerationChartComponent implements OnInit, OnDestroy {
   @Input() accelerationData: IDataModel[] = [];
 
   chart!: any;
-  ctx: string = 'accelerationChart';
+  ctx: string = 'accelerationChartLive';
+  resetTimer: any;
 
   ngOnInit() {
     this.renderChart();
 
-    setInterval(() => {
+    this.resetTimer = setInterval(() => {
         if (this.chart) {
             this.chart.data.datasets[0].data = this.accelerationData.map((data) => ({
               x: data.timestamp,
@@ -49,7 +55,9 @@ export class AccelerationChartComponent implements OnInit {
     }, 1000);
   }
 
-  renderChart(ctx: string = 'accelerationChart') {
+  renderChart(ctx: string = 'accelerationChartLive') {
+    if(this.chart) this.chart.destroy();
+    
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -85,5 +93,10 @@ export class AccelerationChartComponent implements OnInit {
         maintainAspectRatio: false,
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.chart.destroy();
+    clearInterval(this.resetTimer);
   }
 }

@@ -1,6 +1,7 @@
 import {
   Component,
   Input,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { Chart } from 'chart.js';
@@ -10,22 +11,30 @@ import 'chartjs-adapter-date-fns';
 @Component({
   selector: 'app-temperature-chart',
   template: ` 
-    <p class="mat-headline-3" align="center" style="margin-top: 128px;">
+   <div class="my-8">
+    <h1 class="!mb-2">
       Temperature Chart
+    </h1>
+    <p class="mat-body">
+      Temperature in &#8451;
     </p>
-    <canvas id="temperatureChart" height="300"></canvas> 
+    <div class="rounded-lg shadow-md p-4 h-96 bg-slate-50">
+      <canvas id="temperatureChartLive" height="300"></canvas>
+    </div>
+  </div>
   `,
 })
-export class TemperatureChartComponent implements OnInit {
+export class TemperatureChartComponent implements OnInit, OnDestroy {
   @Input() temperatureData: IDataModel[] = [];
 
   chart!: any;
-  ctx: string = 'temperatureChart';
+  ctx: string = 'temperatureChartLive';
+  resetTimer: any;
 
   ngOnInit() {
     this.renderChart();
 
-    setInterval(() => {
+    this.resetTimer = setInterval(() => {
         if (this.chart) {
             this.chart.data.datasets[0].data = this.temperatureData.map((data) => ({
               x: data.timestamp,
@@ -38,7 +47,7 @@ export class TemperatureChartComponent implements OnInit {
     }, 1000);
   }
 
-  renderChart(ctx: string = 'temperatureChart') {
+  renderChart(ctx: string = 'temperatureChartLive') {
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -67,5 +76,10 @@ export class TemperatureChartComponent implements OnInit {
         maintainAspectRatio: false,
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.chart.destroy();
+    clearInterval(this.resetTimer);
   }
 }

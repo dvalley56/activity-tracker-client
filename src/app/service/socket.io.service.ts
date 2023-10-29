@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 // @ts-ignore
 import * as io from 'socket.io-client';
 import { environment } from 'src/environments/environment';
@@ -11,6 +11,10 @@ import { environment } from 'src/environments/environment';
 export class SocketIOService {
   private url = `${environment.apiUrl}`; // Update with your server URL
   private socket;
+  private resetTimer: any;
+
+  // make an observable to identidy if device is online or offline, means are we getting live data or not
+  public isOnline: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private _snackBar: MatSnackBar) {
     this.socket = io(this.url, { 

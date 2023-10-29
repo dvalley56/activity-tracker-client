@@ -1,13 +1,24 @@
-<div class="container">
-    <div style="margin-bottom: 20px ;">
+<div class="cont mx-auto">
+    <div align="center">
+        <h1 class="mb-4 mat-headline-4 !font-extrabold leading-none tracking-tight !text-gray-600 md:text-5xl lg:text-6xl">
+          Activity Tracker <span class="underline underline-offset-3 decoration-8 !text-gray-900 decoration-violet-700">Live Feed</span></h1>
+      </div>
+      <mat-divider></mat-divider>
+    <div class="my-8">
         <button type="button" routerLink="/dashboard" mat-flat-button color="primary">
             <mat-icon>arrow_back</mat-icon>
             Dasboard
         </button>
     </div>
-    <p class="mat-headline-5">
-        Activity Status : {{data.at(-1)?.activity_status}}
-    </p>
+    <div >
+        <h1 class="!font-normal">
+            Activity Status : 
+            <span class="!text-violet-900">
+                {{data.at(-1)?.activity_status ? data.at(-1)?.activity_status: 'No Data'}}
+            </span>
+        </h1> 
+    </div>
+
     <app-acceleration-chart [accelerationData]="data"></app-acceleration-chart>
     <app-temperature-chart [temperatureData]="data"></app-temperature-chart>
     <app-humidity-chart [humidityData]="data"></app-humidity-chart>

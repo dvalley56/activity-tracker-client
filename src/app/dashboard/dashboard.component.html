@@ -1,70 +1,147 @@
-<div class="cont">
-    <!-- Make a date range  -->
-    <div>
-        <form class="toolbar" [formGroup]="myForm">
+<div class="cont mx-auto">
+  <!-- <p class="mat-headline-4 text-center">
+    Activity tracker - Dashboard 
+  </p> -->
+  <div align="center">
+    <h1 class="mb-4 mat-headline-4 !font-extrabold leading-none tracking-tight !text-gray-600 md:text-5xl lg:text-6xl">
+      Activity Tracker <span class="underline underline-offset-3 decoration-8 !text-gray-900 decoration-violet-700">Dashboard</span></h1>
+  </div>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Choose an activy status</mat-label>
-                <mat-select formControlName="activityStatus">
-                    <mat-option>---</mat-option>
-                    <mat-option value="idle">Idle</mat-option>
-                    <mat-option value="walking">Walking</mat-option>
-                    <mat-option value="running">Running</mat-option>
-                </mat-select>
-            </mat-form-field>
+  <div class="my-8">
+    <button type="button" routerLink="/live-feed" mat-flat-button color="primary">
+        <mat-icon>arrow_back</mat-icon>
+        Live Feed
+    </button>
+</div>
+  <ng-container *ngIf="stats">
+    <mat-divider></mat-divider>
+    <h2 class="!my-4">
+      Statistics
+    </h2>
+    <div class="flex flex-row gap-4 my-8">
+      <div class="pl-1 w-96 h-20 bg-green-400 rounded-lg shadow-md">
+        <div class="flex w-full h-full py-2 px-4 bg-slate-50 rounded-lg justify-between">
+          <div class="my-auto">
+            <p class="font-bold">TOTAL RECORDS</p>
+            <p class="text-lg">{{stats.totalRecords | number:'1.0-0'}}</p>
+          </div>
+        </div>
+      </div>
 
-            <mat-form-field appearance="outline">
-                <input matInput [ngxMatDatetimePicker]="startDate" formControlName="startDate" placeholder="Choose a start time">
-                <ngx-mat-datepicker-toggle matSuffix [for]="startDate"></ngx-mat-datepicker-toggle>
-                <ngx-mat-datetime-picker #startDate [enableMeridian]="true">
-                </ngx-mat-datetime-picker>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <input matInput [ngxMatDatetimePicker]="endDate" formControlName="endDate" placeholder="Choose a end time">
-                <ngx-mat-datepicker-toggle matSuffix [for]="endDate"></ngx-mat-datepicker-toggle>
-                <ngx-mat-datetime-picker #endDate [enableMeridian]="true">
-                </ngx-mat-datetime-picker>
-            </mat-form-field>
-            <!-- <mat-form-field>
-                <mat-label>Enter a date range</mat-label>
-                <mat-date-range-input [rangePicker]="picker">
-                    <input matStartDate [(ngModel)]="startDate" placeholder="Start date">
-                    <input matEndDate [(ngModel)]="endDate" placeholder="End date">
-                </mat-date-range-input>
-                <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>
-            </mat-form-field> -->
+      <div class="pl-1 w-96 h-20 bg-blue-500 rounded-lg shadow-md">
+        <div class="flex w-full h-full py-2 px-4 bg-slate-50 rounded-lg justify-between">
+          <div class="my-auto">
+            <p class="font-bold">Average Temprature</p>
+            <p class="text-lg">
+              {{stats.avgTemp| number:'1.0-2'}} &#8451;
+            </p>
+          </div>
+        </div>
+      </div>
 
-            <button type="button" (click)="getData()" mat-flat-button color="primary">
-                <mat-icon>search</mat-icon>
-                Search
-            </button>
-            <button type="button" routerLink="/live-feed" mat-flat-button color="primary">
-                <mat-icon>play_arrow</mat-icon>
-                Go Live
-            </button>
-        </form>
+      <div class="pl-1 w-96 h-20 bg-purple-500 rounded-lg shadow-md">
+        <div class="flex w-full h-full py-2 px-4 rounded-lg justify-between bg-slate-50">
+          <div class="my-auto">
+            <p class="font-bold">AVERAGE HUMIDITY</p>
+            <p class="text-lg">
+              {{stats.avgHumidity| number:'1.0-2'}} %
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div style="height: 600px;">
-        <p class="mat-headline-3" align="center">
-            Acceleration Chart
-        </p>
-        <canvas id="accelerationChart" height="300"></canvas>
-    </div>
+  </ng-container>
 
-    <div style="height: 600px;">
-        <p class="mat-headline-3" align="center" style="margin-top: 128px;">
-            Temperature Chart
-        </p>
-        <canvas id="temperatureChart" height="300"></canvas>
-    </div>
+  <mat-divider></mat-divider>
 
-    <div style="height: 600px;">
-        <p class="mat-headline-3" align="center" style="margin-top: 128px;">
-            Humidity Chart
-        </p>
-        <canvas id="humidityChart" height="300"></canvas>
+  <h2 class="!my-4">
+    Filter Data
+  </h2>
+
+  <form class="toolbar" [formGroup]="myForm">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Choose an activy status</mat-label>
+      <mat-select formControlName="activityStatus">
+        <mat-option>---</mat-option>
+        <mat-option value="idle">Idle</mat-option>
+        <mat-option value="walking">Walking</mat-option>
+        <mat-option value="running">Running</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <input matInput [ngxMatDatetimePicker]="startDate" formControlName="startDate" placeholder="Choose a start time">
+      <ngx-mat-datepicker-toggle matSuffix [for]="startDate"></ngx-mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #startDate [enableMeridian]="true">
+      </ngx-mat-datetime-picker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input matInput [ngxMatDatetimePicker]="endDate" formControlName="endDate" placeholder="Choose a end time">
+      <ngx-mat-datepicker-toggle matSuffix [for]="endDate"></ngx-mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #endDate [enableMeridian]="true">
+      </ngx-mat-datetime-picker>
+    </mat-form-field>
+
+    <button type="button" (click)="getData()" mat-flat-button color="primary">
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+  </form>
+
+  <ng-container *ngIf="data && data.length>2">
+    <p class="mat-body">
+      Showing
+      <span class="mat-body-strong">
+        {{data.length}}
+      </span>
+      records, from
+      <span class="mat-body-strong">
+        {{data[data.length-1].timestamp | date:'medium'}}
+      </span>
+      to
+      <span class="mat-body-strong">
+
+        {{data[0].timestamp | date:'medium'}}
+      </span>
+    </p>
+  </ng-container>
+
+  <div class="my-8">
+    <h1 class="!mb-2">
+      Acceleration Chart
+    </h1>
+    <p class="mat-body">
+      Acceleration in X, Y and Z axis
+    </p>
+    <div class="rounded-lg shadow-md p-4 h-96 bg-slate-50">
+      <canvas id="accelerationChart" height="300"></canvas>
     </div>
+  </div>
+
+  <div class="my-8">
+    <h1 class="!mb-2">
+      Temperature Chart
+    </h1>
+    <p class="mat-body">
+      Temperature in &#8451;
+    </p>
+    <div class="rounded-lg shadow-md p-4 h-96 bg-slate-50">
+      <canvas id="temperatureChart" height="300"></canvas>
+    </div>
+  </div>
+
+  <div class="my-8">
+    <h1 class="!mb-2">
+      Humidity Chart
+    </h1>
+    <p class="mat-body">
+      Humidity in %
+    </p>
+    <div class="rounded-lg shadow-md p-4 h-96 bg-slate-50">
+
+      <canvas id="humidityChart" height="300"></canvas>
+    </div>
+  </div>
 
 </div>

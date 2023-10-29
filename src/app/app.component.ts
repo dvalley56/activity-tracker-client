@@ -7,5 +7,12 @@ import { IDataModel } from './models';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-
+  isOnline = false;
+  
+  constructor(private socketService: SocketIOService) {
+    this.socketService.isOnline
+    .subscribe((isOnline) => {
+      this.isOnline = isOnline;
+    });
+  }
 }
