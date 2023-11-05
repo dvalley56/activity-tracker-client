@@ -49,8 +49,6 @@ export class DashboardComponent {
     this.dataService.getStats()
       .subscribe((data) => {
         this.stats = data;
-        
-        console.log(this.stats);
       });
   }
 
